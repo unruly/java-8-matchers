@@ -3,7 +3,7 @@ Hamcrest Matchers for Java 8 features
 
 Contains matchers for:
 
-Stream (and primitive variants)
-Optional (and primitive variants)
-Temporal
-TemporalAmount
+* java.util.Stream (and primitive variants)
+* java.util.Optional (and primitive variants)
+* java.time.Temporal
+* java.time.TemporalAmount

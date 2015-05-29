@@ -1,4 +1,4 @@
-# java-8-matchers
+## java-8-matchers
 Hamcrest Matchers for Java 8 features
 
 Contains matchers for:
@@ -7,6 +7,21 @@ Contains matchers for:
 * java.util.Optional (and primitive variants)
 * java.time.Temporal (Instant, LocalDateTime, various other calendar systems)
 * java.time.TemporalAmount (Duration and Period)
+
+# Installation
+
+Available from the Central Repository. In Maven style:
+
+        <dependency>
+            <groupId>co.unruly</groupId>
+            <artifactId>java-8-matchers</artifactId>
+            <version>1.1</version>
+        </dependency>
+
+A test-jar is also available to gain access to a helper for testing the error messages of failing
+Matchers.
+
+            <type>test-jar</type>
 
 # Examples
 

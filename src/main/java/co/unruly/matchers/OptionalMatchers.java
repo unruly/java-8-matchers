@@ -52,11 +52,12 @@ public class OptionalMatchers {
      *
      * @param matcher To match against the Optional's content
      * @param <T> The type of the Optional's content
+     * @param <S> The type matched by the matcher, a subtype of T
      */
-    public static <T> Matcher<Optional<T>> contains(Matcher<T> matcher) {
-        return new TypeSafeMatcher<Optional<T>>() {
+    public static <T, S extends T> Matcher<Optional<S>> contains(Matcher<T> matcher) {
+        return new TypeSafeMatcher<Optional<S>>() {
             @Override
-            protected boolean matchesSafely(Optional<T> item) {
+            protected boolean matchesSafely(Optional<S> item) {
                 return item.map(matcher::matches).orElse(false);
             }
 

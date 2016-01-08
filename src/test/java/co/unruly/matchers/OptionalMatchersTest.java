@@ -1,11 +1,15 @@
 package co.unruly.matchers;
 
+import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.OptionalInt;
 
+import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
 
@@ -50,6 +54,13 @@ public class OptionalMatchersTest {
     @Test
     public void containsMatcher_success() throws Exception {
         assertThat(Optional.of(4),OptionalMatchers.contains(Matchers.greaterThan(3)));
+    }
+
+    @Test
+    public void containsMatcher_success_typechecksWhenOptionalsArgIsStrictSubtype() {
+        Optional<List<String>> optionalToMatch = Optional.of(Arrays.asList("a"));
+        Matcher<Iterable<? super String>> matcherOfStrictSuperType = hasItem("a");
+        assertThat(optionalToMatch, OptionalMatchers.contains(matcherOfStrictSuperType));
     }
 
     @Test

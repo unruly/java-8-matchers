@@ -81,6 +81,11 @@ public class StreamMatchersTest {
     }
 
     @Test
+    public void contains_is_nullsafe() {
+        assertThat(Stream.of("a", null, "c"), contains("a", null, "c"));
+    }
+
+    @Test
     public void allMatch_success() throws Exception {
         assertThat(Stream.of("bar","baz"),allMatch(containsString("a")));
     }

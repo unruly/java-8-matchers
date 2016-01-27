@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.PrimitiveIterator;
+import java.util.Objects;
 import java.util.stream.*;
 
 public class StreamMatchers {
@@ -647,7 +648,7 @@ public class StreamMatchers {
                 expectedAccumulator.add(nextExpected);
                 T nextActual = actualIterator.next();
                 actualAccumulator.add(nextActual);
-                if(nextExpected.equals(nextActual)) {
+                if(Objects.equals(nextExpected, nextActual)) {
                     return remainingItemsEqual(expectedIterator, actualIterator);
                 }
             }

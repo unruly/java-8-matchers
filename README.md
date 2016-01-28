@@ -1,4 +1,7 @@
 ## java-8-matchers
+
+[![Build Status](https://travis-ci.org/unruly/java-8-matchers.svg?branch=master)](https://travis-ci.org/unruly/java-8-matchers)
+
 Hamcrest Matchers for Java 8 features
 
 Contains matchers for:

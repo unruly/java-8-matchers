@@ -41,10 +41,6 @@ public class Java8MatchersTest {
     }
 
 
-
-
-
-
     static class A {
         boolean isCool() {
             return true;

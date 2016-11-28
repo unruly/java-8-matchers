@@ -24,5 +24,4 @@ public class LambdaMethodFinderTest {
         assertThat(((DescribableFunction<String, byte[]>) String::getBytes).getResultDescription(), is("getBytes (a byte[])"));
     }
 
-
 }

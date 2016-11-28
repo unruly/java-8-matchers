@@ -3,6 +3,7 @@ package co.unruly.matchers.function;
 import java.lang.invoke.SerializedLambda;
 import java.util.function.Predicate;
 
+@FunctionalInterface
 public interface DescribablePredicate<T> extends Predicate<T>, SerializedLambdaResolvable, SingleArgumentDescribableFunctionalInterface {
 
     default String getResultDescription() {
@@ -12,4 +13,5 @@ public interface DescribablePredicate<T> extends Predicate<T>, SerializedLambdaR
         }
         return "boolean";
     }
+
 }

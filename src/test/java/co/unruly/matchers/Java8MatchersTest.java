@@ -14,13 +14,13 @@ public class Java8MatchersTest {
     final A entity = new A();
 
     @Test
-    public void propertiesWhichIsTrue() {
+    public void propertiesWhichAreTrue() {
         assertThat(entity, where(A::isCool));
         assertThat(entity, where(a -> a.isCool()));
     }
 
     @Test
-    public void propertiesWhichIsFalse() {
+    public void propertiesWhichAreFalse() {
         assertThat(entity, whereNot(A::isBoring));
         assertThat(entity, whereNot(a -> a.isBoring()));
     }

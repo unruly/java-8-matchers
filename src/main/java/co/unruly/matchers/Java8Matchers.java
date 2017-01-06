@@ -8,7 +8,7 @@ import org.hamcrest.TypeSafeDiagnosingMatcher;
 
 import java.util.function.Function;
 
-import static co.unruly.matchers.function.DescriptionUtils.withPrefixedArticle;
+import static co.unruly.matchers.internal.DescriptionUtils.withPrefixedArticle;
 import static org.hamcrest.CoreMatchers.is;
 
 public final class Java8Matchers {

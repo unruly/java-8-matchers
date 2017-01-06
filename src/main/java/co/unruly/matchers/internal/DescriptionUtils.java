@@ -1,4 +1,4 @@
-package co.unruly.matchers.function;
+package co.unruly.matchers.internal;
 
 import static java.util.Arrays.binarySearch;
 

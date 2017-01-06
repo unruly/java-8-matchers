@@ -1,12 +1,12 @@
 package co.unruly.matchers.function;
 
+import java.lang.invoke.MethodType;
+
 interface SingleArgumentDescribableFunctionalInterface extends SerializedLambdaResolvable {
 
     default String getArgumentDescription() {
-        String actualSignature = asSerializedLambda().getInstantiatedMethodType();
-        String argumentType = actualSignature.substring(actualSignature.indexOf('(') + 1, actualSignature.indexOf(')') - 1);
-        argumentType = argumentType.substring(argumentType.lastIndexOf('/') + 1);
-        return argumentType;
+        MethodType methodType = MethodType.fromMethodDescriptorString(asSerializedLambda().getInstantiatedMethodType(), getClass().getClassLoader());
+        return methodType.parameterType(0).getSimpleName();
     }
 
 }

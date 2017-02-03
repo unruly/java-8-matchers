@@ -34,3 +34,9 @@ release.properties
 
 # IntelliJ
 out/
+
+
+### Eclipse
+.classpath
+.project
+.settings

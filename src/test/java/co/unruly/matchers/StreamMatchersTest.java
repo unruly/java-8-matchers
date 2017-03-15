@@ -217,7 +217,7 @@ public class StreamMatchersTest {
     @Test
     public void contains_failureMessages() throws Exception {
         Stream<String> testData = Stream.of("a", "b", "c", "d", "e");
-        Matcher<BaseStream<String, Stream<String>>> matcher = contains("a", "b", "c", "d", "e", "f", "g", "h");
+        Matcher<Stream<String>> matcher = contains("a", "b", "c", "d", "e", "f", "g", "h");
         Helper.testFailingMatcher(testData, matcher, "Stream of [\"a\",\"b\",\"c\",\"d\",\"e\",\"f\",\"g\",\"h\"]", "Stream of [\"a\",\"b\",\"c\",\"d\",\"e\"]");
     }
 
@@ -306,5 +306,14 @@ public class StreamMatchersTest {
     @Test
     public void startsWithAnyDouble_fail() throws Exception {
         Helper.testFailingMatcher(DoubleStream.iterate(0, i -> i + 1), StreamMatchers.startsWithAnyDouble(Matchers.equalTo(-1d), 10), "Any of first 10 to match <<-1.0>>", "None of these items matched: [<0.0>,<1.0>,<2.0>,<3.0>,<4.0>,<5.0>,<6.0>,<7.0>,<8.0>,<9.0>]");
+    }
+
+    @Test
+    public void contains_returnsParameterizedMatcher() {
+        usesStreamMatcher(Stream.of(10), StreamMatchers.contains(10));
+    }
+
+    private void usesStreamMatcher(Stream<Integer> stream, Matcher<Stream<Integer>> matcher) {
+        assertThat(stream, matcher);
     }
 }

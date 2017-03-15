@@ -366,10 +366,10 @@ public class StreamMatchers {
      * @see #startsWithDouble(double...)
      */
     @SafeVarargs
-    public static <T,S extends BaseStream<T,S>> Matcher<BaseStream<T,S>> contains(T... expected) {
-        return new BaseStreamMatcher<T,BaseStream<T,S>>() {
+    public static <T,S extends BaseStream<T,S>> Matcher<S> contains(T... expected) {
+        return new BaseStreamMatcher<T,S>() {
             @Override
-            protected boolean matchesSafely(BaseStream<T,S> actual) {
+            protected boolean matchesSafely(S actual) {
                 return remainingItemsEqual(new ArrayIterator<>(expected), actual.iterator());
             }
         };

@@ -1,7 +1,7 @@
 ## java-8-matchers
 
 [![Build Status](https://travis-ci.org/unruly/java-8-matchers.svg?branch=master)](https://travis-ci.org/unruly/java-8-matchers)
-![Release Version](https://img.shields.io/maven-central/v/co.unruly/java-8-matchers.svg)
+[![Release Version](https://img.shields.io/maven-central/v/co.unruly/java-8-matchers.svg)](https://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22co.unruly%22%20AND%20a%3A%22java-8-matchers%22)
 
 Hamcrest Matchers for Java 8 features
 
@@ -20,7 +20,7 @@ Available from the Central Repository. In Maven style:
 <dependency>
   <groupId>co.unruly</groupId>
   <artifactId>java-8-matchers</artifactId>
-  <version>1.4</version>
+  <version>1.5</version>
 </dependency>
 ```
 

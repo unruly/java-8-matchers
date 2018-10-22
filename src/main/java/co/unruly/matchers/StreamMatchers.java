@@ -357,6 +357,29 @@ public class StreamMatchers {
      * The BaseStream must produce exactly the given expected items in order, and no more.
      *
      * For infinite BaseStreams see {@link #startsWith(T...)} or a primitive stream variant
+     * @param expectedMatchers Matchers for the items that should be produced by the BaseStream
+     * @param <T> The type of items
+     * @param <S> The type of the BaseStream
+     * @see #startsWith(T...)
+     * @see #startsWithInt(int...)
+     * @see #startsWithLong(long...)
+     * @see #startsWithDouble(double...)
+     */
+    @SafeVarargs
+    public static <T,S extends BaseStream<T,S>> Matcher<S> contains(Matcher<T>... expectedMatchers) {
+        return new BaseMatcherStreamMatcher<T,S>() {
+
+            @Override
+            protected boolean matchesSafely(S actual) {
+                return remainingItemsEqual(new ArrayIterator<>(expectedMatchers), actual.iterator());
+            }
+        };
+    }
+
+    /**
+     * The BaseStream must produce exactly the given expected items in order, and no more.
+     *
+     * For infinite BaseStreams see {@link #startsWith(T...)} or a primitive stream variant
      * @param expected The items that should be produced by the BaseStream
      * @param <T> The type of items
      * @param <S> The type of the BaseStream
@@ -649,6 +672,39 @@ public class StreamMatchers {
                 T nextActual = actualIterator.next();
                 actualAccumulator.add(nextActual);
                 if(Objects.equals(nextExpected, nextActual)) {
+                    return remainingItemsEqual(expectedIterator, actualIterator);
+                }
+            }
+            expectedIterator.forEachRemaining(expectedAccumulator::add);
+            actualIterator.forEachRemaining(actualAccumulator::add);
+            return false;
+        }
+    }
+
+    private static abstract class BaseMatcherStreamMatcher<T,S extends BaseStream<T,?>> extends TypeSafeMatcher<S> {
+        final List<Matcher<T>> expectedAccumulator = new LinkedList<>();
+        final List<T> actualAccumulator = new LinkedList<>();
+
+        @Override
+        protected void describeMismatchSafely(S item, Description description) {
+            description.appendText("Stream of ").appendValueList("[", ",", "]", actualAccumulator);
+        }
+
+        @Override
+        public void describeTo(Description description) {
+            description.appendText("Stream of ").appendValueList("[", ",", "]", expectedAccumulator);
+        }
+
+        boolean remainingItemsEqual(Iterator<Matcher<T>> expectedIterator, Iterator<T> actualIterator) {
+            if (!expectedIterator.hasNext() && !actualIterator.hasNext()) {
+                return true;
+            }
+            if (expectedIterator.hasNext() && actualIterator.hasNext()) {
+                Matcher<T> nextExpected = expectedIterator.next();
+                expectedAccumulator.add(nextExpected);
+                T nextActual = actualIterator.next();
+                actualAccumulator.add(nextActual);
+                if(nextExpected.matches(nextActual)) {
                     return remainingItemsEqual(expectedIterator, actualIterator);
                 }
             }

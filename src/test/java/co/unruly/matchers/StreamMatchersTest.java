@@ -313,6 +313,18 @@ public class StreamMatchersTest {
         usesStreamMatcher(Stream.of(10), StreamMatchers.contains(10));
     }
 
+    @Test
+    public void contains_acceptsMatchers() {
+        usesStreamMatcher(
+            Stream.of(10, 20, 30),
+            StreamMatchers.contains(
+                is(10),
+                lessThanOrEqualTo(20),
+                not(20)
+            )
+        );
+    }
+
     private void usesStreamMatcher(Stream<Integer> stream, Matcher<Stream<Integer>> matcher) {
         assertThat(stream, matcher);
     }

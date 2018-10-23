@@ -371,7 +371,7 @@ public class StreamMatchers {
 
             @Override
             protected boolean matchesSafely(S actual) {
-                return remainingItemsEqual(new ArrayIterator<>(expectedMatchers), actual.iterator());
+                return remainingItemsMatch(new ArrayIterator<>(expectedMatchers), actual.iterator());
             }
         };
     }
@@ -695,7 +695,7 @@ public class StreamMatchers {
             description.appendText("Stream of ").appendValueList("[", ",", "]", expectedAccumulator);
         }
 
-        boolean remainingItemsEqual(Iterator<Matcher<T>> expectedIterator, Iterator<T> actualIterator) {
+        boolean remainingItemsMatch(Iterator<Matcher<T>> expectedIterator, Iterator<T> actualIterator) {
             if (!expectedIterator.hasNext() && !actualIterator.hasNext()) {
                 return true;
             }
@@ -705,7 +705,7 @@ public class StreamMatchers {
                 T nextActual = actualIterator.next();
                 actualAccumulator.add(nextActual);
                 if(nextExpected.matches(nextActual)) {
-                    return remainingItemsEqual(expectedIterator, actualIterator);
+                    return remainingItemsMatch(expectedIterator, actualIterator);
                 }
             }
             expectedIterator.forEachRemaining(expectedAccumulator::add);

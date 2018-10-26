@@ -4,7 +4,7 @@
 
     <groupId>co.unruly</groupId>
     <artifactId>java-8-matchers</artifactId>
-    <version>1.6-SNAPSHOT</version>
+    <version>1.6</version>
 
     <name>java-8-matchers</name>
 
@@ -37,7 +37,7 @@
         <connection>scm:git:git@github.com:unruly/${project.artifactId}.git</connection>
         <developerConnection>scm:git:git@github.com:unruly/${project.artifactId}.git</developerConnection>
         <url>git@github.com:unruly/${project.artifactId}.git</url>
-        <tag>HEAD</tag>
+        <tag>java-8-matchers-1.6</tag>
     </scm>
 
     <dependencies>

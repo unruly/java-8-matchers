@@ -1,9 +1,9 @@
-## java-8-matchers
+# java-8-matchers
 
 [![Build Status](https://travis-ci.org/unruly/java-8-matchers.svg?branch=master)](https://travis-ci.org/unruly/java-8-matchers)
 [![Release Version](https://img.shields.io/maven-central/v/co.unruly/java-8-matchers.svg)](https://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22co.unruly%22%20AND%20a%3A%22java-8-matchers%22)
 
-Hamcrest Matchers for Java 8 features
+Hamcrest Matchers for Java 8 features.
 
 Contains matchers for:
 
@@ -12,7 +12,8 @@ Contains matchers for:
 * java.time.Temporal (Instant, LocalDateTime, various other calendar systems)
 * java.time.TemporalAmount (Duration and Period)
 
-# Installation
+
+## Installation
 
 Available from the Central Repository. In Maven style:
 
@@ -31,11 +32,15 @@ Matchers.
 <type>test-jar</type>
 ```
 
+
+
 # Examples
 
 Below are some examples of the java-8-matchers API
 
-### Optionals
+
+## Optionals
+
 ```java
 // Contents of Optional
 assertThat(Optional.of("Hi!"), OptionalMatchers.contains("Hi!"));
@@ -46,7 +51,11 @@ assertThat(Optional.of(4), OptionalMatchers.contains(Matchers.greaterThan(3)));
 // Assert empty
 assertThat(Optional.empty(), OptionalMatchers.empty());
 ```
-### Streams
+
+
+
+## Streams
+
 ```java
 // Stream is empty
 assertThat(Stream.empty(), StreamMatchers.empty());
@@ -72,7 +81,11 @@ assertThat(Stream.generate(() -> 10), StreamMatchers.startsWithAll(Matchers.equa
 // Stream matches at least one object within limit
 assertThat(Stream.iterate(0, i -> i + 1), StreamMatchers.startsWithAny(Matchers.equalTo(10), 100));
 ```
+
+
+
 ## Time
+
 ```java
 // Time is before another
 assertThat(Instant.parse("2014-01-01T00:00:00.00Z"), TimeMatchers.before(Instant.parse("2015-01-01T00:00:00.00Z")));

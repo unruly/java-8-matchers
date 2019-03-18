@@ -8,10 +8,10 @@ Hamcrest Matchers for Java 8 features.
 
 Contains matchers for:
 
-* java.util.Optional (and primitive variants)
-* java.util.Stream (and primitive variants)
-* java.time.Temporal (Instant, LocalDateTime, various other calendar systems)
-* java.time.TemporalAmount (Duration and Period)
+* `java.util.Optional` (and primitive variants)
+* `java.util.Stream` (and primitive variants)
+* `java.time.Temporal` (`Instant`, `LocalDateTime`, various other calendar systems)
+* `java.time.TemporalAmount` (`Duration` and `Period`)
 
 
 ## Installation

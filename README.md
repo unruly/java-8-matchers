@@ -4,14 +4,17 @@
 [![Release Version](https://img.shields.io/maven-central/v/co.unruly/java-8-matchers.svg)](https://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22co.unruly%22%20AND%20a%3A%22java-8-matchers%22)
 [![Javadoc](https://javadoc-badge.appspot.com/co.unruly/java-8-matchers.svg)](https://javadoc-badge.appspot.com/co.unruly/java-8-matchers)
 
-Hamcrest Matchers for Java 8 features.
+**Hamcrest Matchers for Java 8 features.**
 
-Contains matchers for:
+The library contains matchers for the following types introduced with Java 8:
 
 * `java.util.Optional` (and primitive variants)
 * `java.util.Stream` (and primitive variants)
 * `java.time.Temporal` (`Instant`, `LocalDateTime`, various other calendar systems)
 * `java.time.TemporalAmount` (`Duration` and `Period`)
+
+In addition, there is an API to construct matchers by using lambdas to extract data from arbitrary types and apply matchers to the result. See examples of this below.
+
 
 
 ## Installation
@@ -109,3 +112,94 @@ assertThat(Duration.ofSeconds(4), TimeMatchers.shorterThan(Duration.ofMinutes(4)
 // Period matches element-wise
 assertThat(Period.of(1, 2, 3), TimeMatchers.matches(equalTo(1), equalTo(2), equalTo(3)));
 ```
+
+
+
+## Method references and lambdas
+
+[`Java8Matchers`](https://oss.sonatype.org/service/local/repositories/releases/archive/co/unruly/java-8-matchers/1.6/java-8-matchers-1.6-javadoc.jar/!/co/unruly/matchers/Java8Matchers.html) enables asserting the state of objects of arbitrary types by using method references or lambdas to resolve values which can be matched by other matchers.
+
+Say we have the following domain:
+
+```java
+class EmailAddress {
+  static EmailAddress verified(String address) {
+    return new EmailAddress(address, true);
+  }
+
+  static EmailAddress unverified(String address) {
+    return new EmailAddress(address, false);
+  }
+
+  String address;
+  boolean verified;
+
+  private EmailAddress(String address, boolean verified) {
+    this.address = address;
+    this.verified = verified;
+  }
+
+  String getAddress() {
+    return address;
+  }
+
+  boolean isVerified() {
+    return verified;
+  }
+
+  // equals and hashCode
+}
+
+class ContactInfo {
+  String name;
+  EmailAddress email;
+  Instant expiration;
+
+  String getName() {
+    return name;
+  }
+
+  Instant getExpiration() {
+    return expiration;
+  }
+
+  EmailAddress getEmailAddress() {
+    return email;
+  }
+}
+```
+
+Following is some examples on how we can assert the state of the domain objects above:
+
+```java
+import static co.unruly.matchers.Java8Matchers.where;
+import static org.hamcrest.Matchers.is; //regular matcher from the Hamcrest library
+...
+ContactInfo contactInfo = // resolve ContactInfo from somewhere
+
+// check the name is as expected
+assertThat(contactInfo, where(ContactInfo::getName, is("John Doe")));
+```
+
+What is the point of performing the assert in this manner instead of just invoking `contactInfo.getName()` directly? It enables the construction of more context information in test failure messages. The Hamcrest Matcher created by the `Java8Matchers.where(..)`-method is able to reflect on the method reference, and, in the event of a failing test, is able to tell both that the object of type `ContactInfo` was not as expected, and it was specifically the method `getName` which yielded the unexpected value.
+
+This is especially helpful when asserting `boolean` values:
+
+```java
+import static co.unruly.matchers.Java8Matchers.where;
+import static co.unruly.matchers.Java8Matchers.whereNot;
+...
+assertThat(EmailAddress.verified("john.doe@example.com"), where(EmailAddress::isVerified));
+
+assertThat(EmailAddress.unverified("john.doe@example.com"), whereNot(EmailAddress::isVerified));
+```
+
+Using the `where(<predicate>)` or `whereNot(<predicate>)`, instead of the non-informative "expected true, but was false" test failure messages, you will be told that there was an EmailAddress which was expected to be verified, but was not.
+
+As shown above, matchers created using the `where(..)` or `whereNot(..)` will be able to read the method names of _method references_, i.e. on the form `a::method`. However, if resolving values using _lambdas_, i.e. `a -> a.method()`, it is not possible to resolve the actual method which has been invoked, and the failure messages will instead contain the return type from the lambda. If the return type itself is a custom domain type, it will still often be sufficiently specific:
+
+```java
+ContactInfo contactInfo = // resolve ContactInfo from somewhere
+assertThat(contactInfo, where(c -> c.getEmailAddress(), is(EmailAddress.verified("john.doe@example.com"))));
+```
+Here, even though using a lambda instead of a method reference, the test failure message will contain that the `EmailAddress` of a `ContactInfo`-object was not as expected.

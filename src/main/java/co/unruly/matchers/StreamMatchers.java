@@ -13,13 +13,13 @@ import java.util.stream.*;
 
 public class StreamMatchers {
 
-    public static <T,S extends BaseStream<T,S>> Matcher<BaseStream<T,S>> empty() {
-        return new TypeSafeMatcher<BaseStream<T, S>>() {
+    public static <T,S extends BaseStream<T,S>> Matcher<S> empty() {
+        return new TypeSafeMatcher<S>() {
 
             private Iterator<T> actualIterator;
 
             @Override
-            protected boolean matchesSafely(BaseStream<T, S> actual) {
+            protected boolean matchesSafely(S actual) {
                 actualIterator = actual.iterator();
                 return !actualIterator.hasNext();
             }
@@ -30,7 +30,7 @@ public class StreamMatchers {
             }
 
             @Override
-            protected void describeMismatchSafely(BaseStream<T, S> item, Description description) {
+            protected void describeMismatchSafely(S item, Description description) {
                 description.appendText("A non empty Stream starting with ").appendValue(actualIterator.next());
             }
         };
@@ -50,10 +50,10 @@ public class StreamMatchers {
      * @see #startsWithLong
      * @see #startsWithDouble
      */
-    public static <T,S extends BaseStream<T,S>> Matcher<BaseStream<T,S>> equalTo(BaseStream<T, S> expected) {
-        return new BaseStreamMatcher<T,BaseStream<T,S>>() {
+    public static <T,S extends BaseStream<T,S>> Matcher<S> equalTo(S expected) {
+        return new BaseStreamMatcher<T,S>() {
             @Override
-            protected boolean matchesSafely(BaseStream<T,S> actual) {
+            protected boolean matchesSafely(S actual) {
                 return remainingItemsEqual(expected.iterator(), actual.iterator());
             }
         };

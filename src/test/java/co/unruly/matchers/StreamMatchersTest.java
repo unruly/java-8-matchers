@@ -208,7 +208,7 @@ public class StreamMatchersTest {
 
     @Test
     public void equalTo_failureMessages() throws Exception {
-        Matcher<BaseStream<String, Stream<String>>> matcher = equalTo(Stream.of("a", "b", "c", "d", "e", "f", "g", "h"));
+        Matcher<Stream<String>> matcher = equalTo(Stream.of("a", "b", "c", "d", "e", "f", "g", "h"));
         Stream<String> testData = Stream.of("a", "b", "c", "d", "e");
         Helper.testFailingMatcher(testData, matcher, "Stream of [\"a\",\"b\",\"c\",\"d\",\"e\",\"f\",\"g\",\"h\"]", "Stream of [\"a\",\"b\",\"c\",\"d\",\"e\"]");
     }
@@ -224,7 +224,7 @@ public class StreamMatchersTest {
     @Test
     public void equalToIntStream_failureMessages() throws Exception {
         IntStream testData = IntStream.range(8, 10);
-        Matcher<BaseStream<Integer, IntStream>> matcher = equalTo(IntStream.range(0, 6));
+        Matcher<IntStream> matcher = equalTo(IntStream.range(0, 6));
         Helper.testFailingMatcher(testData, matcher, "Stream of [<0>,<1>,<2>,<3>,<4>,<5>]", "Stream of [<8>,<9>]");
     }
 

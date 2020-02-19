@@ -63,7 +63,7 @@ public class OptionalMatchers {
 
             @Override
             public void describeTo(Description description) {
-                description.appendText("Optional with an item that matches" + matcher);
+                description.appendText("Optional with an item that matches " + matcher);
             }
         };
     }

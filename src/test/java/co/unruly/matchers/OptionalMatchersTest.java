@@ -75,7 +75,7 @@ public class OptionalMatchersTest {
 
     @Test
     public void containsMatcher_failureMessage() throws Exception {
-        Helper.testFailingMatcher(Optional.of(2), OptionalMatchers.contains(Matchers.equalTo(4)), "Optional with an item that matches<4>","<Optional[2]>");
+        Helper.testFailingMatcher(Optional.of(2), OptionalMatchers.contains(Matchers.equalTo(4)), "Optional with an item that matches <4>","<Optional[2]>");
     }
 
     @Test

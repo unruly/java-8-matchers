@@ -360,11 +360,11 @@ public class StreamMatchers {
     /**
      * The BaseStream must produce exactly the given expected items in order, and no more.
      *
-     * For infinite BaseStreams see {@link #startsWith(T...)} or a primitive stream variant
+     * For infinite BaseStreams see {@link #startsWith(Object...)} or a primitive stream variant
      * @param expectedMatchers Matchers for the items that should be produced by the BaseStream
      * @param <T> The type of items
      * @param <S> The type of the BaseStream
-     * @see #startsWith(T...)
+     * @see #startsWith(Object...)
      * @see #startsWithInt(int...)
      * @see #startsWithLong(long...)
      * @see #startsWithDouble(double...)
@@ -383,11 +383,11 @@ public class StreamMatchers {
     /**
      * The BaseStream must produce exactly the given expected items in order, and no more.
      *
-     * For infinite BaseStreams see {@link #startsWith(T...)} or a primitive stream variant
+     * For infinite BaseStreams see {@link #startsWith(Object...)} or a primitive stream variant
      * @param expected The items that should be produced by the BaseStream
      * @param <T> The type of items
      * @param <S> The type of the BaseStream
-     * @see #startsWith(T...)
+     * @see #startsWith(Object...)
      * @see #startsWithInt(int...)
      * @see #startsWithLong(long...)
      * @see #startsWithDouble(double...)

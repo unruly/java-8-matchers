@@ -7,9 +7,13 @@ import org.hamcrest.TypeSafeMatcher;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.PrimitiveIterator;
 import java.util.Objects;
-import java.util.stream.*;
+import java.util.PrimitiveIterator;
+import java.util.stream.BaseStream;
+import java.util.stream.DoubleStream;
+import java.util.stream.IntStream;
+import java.util.stream.LongStream;
+import java.util.stream.Stream;
 
 public class StreamMatchers {
 
@@ -671,7 +675,7 @@ public class StreamMatchers {
                 expectedAccumulator.add(nextExpected);
                 T nextActual = actualIterator.next();
                 actualAccumulator.add(nextActual);
-                if(Objects.equals(nextExpected, nextActual)) {
+                if (Objects.equals(nextExpected, nextActual)) {
                     return remainingItemsEqual(expectedIterator, actualIterator);
                 }
             }
@@ -704,7 +708,7 @@ public class StreamMatchers {
                 expectedAccumulator.add(nextExpected);
                 T nextActual = actualIterator.next();
                 actualAccumulator.add(nextActual);
-                if(nextExpected.matches(nextActual)) {
+                if (nextExpected.matches(nextActual)) {
                     return remainingItemsMatch(expectedIterator, actualIterator);
                 }
             }
@@ -912,7 +916,7 @@ public class StreamMatchers {
     private static class IntArrayIterator implements PrimitiveIterator.OfInt {
         private final int[] expected;
         private int currentPos = 0;
-        
+
         public IntArrayIterator(int... expected) {
             this.expected = expected;
         }

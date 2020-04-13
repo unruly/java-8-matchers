@@ -22,7 +22,7 @@ public class OptionalMatchersTest {
 
     @Test
     public void empty_failure() throws Exception {
-        assertThat(Optional.of(1),not(OptionalMatchers.empty()));
+        assertThat(Optional.of(1), not(OptionalMatchers.empty()));
     }
 
     @Test
@@ -42,7 +42,7 @@ public class OptionalMatchersTest {
 
     @Test
     public void contains_failureEmpty() throws Exception {
-        assertThat(Optional.empty(),not(OptionalMatchers.contains("Woot")));
+        assertThat(Optional.empty(), not(OptionalMatchers.contains("Woot")));
     }
 
 
@@ -53,7 +53,7 @@ public class OptionalMatchersTest {
 
     @Test
     public void containsMatcher_success() throws Exception {
-        assertThat(Optional.of(4),OptionalMatchers.contains(Matchers.greaterThan(3)));
+        assertThat(Optional.of(4), OptionalMatchers.contains(Matchers.greaterThan(3)));
     }
 
     @Test
@@ -65,12 +65,12 @@ public class OptionalMatchersTest {
 
     @Test
     public void containsMatcher_failureDiffering() throws Exception {
-        assertThat(Optional.of(100),not(OptionalMatchers.contains(Matchers.lessThanOrEqualTo(19))));
+        assertThat(Optional.of(100), not(OptionalMatchers.contains(Matchers.lessThanOrEqualTo(19))));
     }
 
     @Test
     public void containsMatcher_failureEmpty() throws Exception {
-        assertThat(Optional.empty(),not(OptionalMatchers.contains(Matchers.lessThanOrEqualTo(19))));
+        assertThat(Optional.empty(), not(OptionalMatchers.contains(Matchers.lessThanOrEqualTo(19))));
     }
 
     @Test
@@ -80,41 +80,41 @@ public class OptionalMatchersTest {
 
     @Test
     public void emptyInt_success() throws Exception {
-        assertThat(OptionalInt.empty(),OptionalMatchers.emptyInt());
+        assertThat(OptionalInt.empty(), OptionalMatchers.emptyInt());
     }
 
     @Test
     public void emptyInt_failure() throws Exception {
-        assertThat(OptionalInt.of(0),not(OptionalMatchers.emptyInt()));
+        assertThat(OptionalInt.of(0), not(OptionalMatchers.emptyInt()));
     }
 
     @Test
     public void containsInt_success() throws Exception {
-        assertThat(OptionalInt.of(0),OptionalMatchers.containsInt(0));
+        assertThat(OptionalInt.of(0), OptionalMatchers.containsInt(0));
     }
 
     @Test
     public void containsInt_failureDiffering() throws Exception {
-        assertThat(OptionalInt.of(0),not(OptionalMatchers.containsInt(1)));
+        assertThat(OptionalInt.of(0), not(OptionalMatchers.containsInt(1)));
     }
 
     @Test
     public void containsInt_failureEmpty() throws Exception {
-        assertThat(OptionalInt.empty(),not(OptionalMatchers.containsInt(1)));
+        assertThat(OptionalInt.empty(), not(OptionalMatchers.containsInt(1)));
     }
 
     @Test
     public void containsIntMatcher_success() throws Exception {
-        assertThat(OptionalInt.of(0),OptionalMatchers.containsInt(Matchers.equalTo(0)));
+        assertThat(OptionalInt.of(0), OptionalMatchers.containsInt(Matchers.equalTo(0)));
     }
 
     @Test
     public void containsIntMatcher_failureEmpty() throws Exception {
-        assertThat(OptionalInt.empty(),not(OptionalMatchers.containsInt(Matchers.equalTo(1))));
+        assertThat(OptionalInt.empty(), not(OptionalMatchers.containsInt(Matchers.equalTo(1))));
     }
 
     @Test
     public void containsIntMatcher_failureDiffering() throws Exception {
-        assertThat(OptionalInt.of(0),not(OptionalMatchers.containsInt(Matchers.equalTo(1))));
+        assertThat(OptionalInt.of(0), not(OptionalMatchers.containsInt(Matchers.equalTo(1))));
     }
 }

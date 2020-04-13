@@ -65,7 +65,7 @@ public class TimeMatchersTest {
 
     @Test
     public void betweenTemporal_failureAfter() throws Exception {
-        Helper.testFailingMatcher(instant2016,TimeMatchers.between(instant2014,instant2015),"between <2014-01-01T00:00:00Z> and <2015-01-01T00:00:00Z> inclusive","<2016-01-01T00:00:00Z>");
+        Helper.testFailingMatcher(instant2016, TimeMatchers.between(instant2014,instant2015),"between <2014-01-01T00:00:00Z> and <2015-01-01T00:00:00Z> inclusive","<2016-01-01T00:00:00Z>");
     }
 
     @Test

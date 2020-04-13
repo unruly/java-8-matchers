@@ -7,9 +7,7 @@
     <version>1.7-SNAPSHOT</version>
 
     <name>java-8-matchers</name>
-
-    <description>Hamcrest matchers for JDK8's Optionals and Streams, and the java.time package</description>
-
+    <description>Hamcrest matchers for features introduced in Java 8: Optional, Stream, the Java Time API, and lambdas.</description>
     <url>https://github.com/unruly/java-8-matchers</url>
 
     <properties>

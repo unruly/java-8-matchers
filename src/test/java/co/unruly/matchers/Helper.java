@@ -13,7 +13,6 @@ class Helper {
             assertThat(testData, matcher);
             fail("Supposed to not match " + matcher + ", but " + testData + " matched");
         } catch (AssertionError e) {
-            System.out.println(e.getMessage());
             assertThat(e.toString(), stringContainsInOrder(asList(expectedDescription, actualDescription)));
         }
     }

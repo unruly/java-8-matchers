@@ -33,7 +33,7 @@ public class StreamMatchersTest {
 
     @Test
     public void contains_failureDifferingSingleItem() throws Exception {
-        assertThat(Stream.of("a"), is(not(contains("b"))));
+        assertThat(Stream.of("a"), not(contains("b")));
     }
 
     @Test
@@ -43,7 +43,7 @@ public class StreamMatchersTest {
 
     @Test
     public void contains_failureDifferingLength() throws Exception {
-        assertThat(Stream.of("a"), is(not(contains("a", "b"))));
+        assertThat(Stream.of("a"), not(contains("a", "b")));
     }
 
     @Test
@@ -53,7 +53,7 @@ public class StreamMatchersTest {
 
     @Test
     public void contains_failureDifferingItems() throws Exception {
-        assertThat(Stream.of("a","c"), is(not(contains("a", "b"))));
+        assertThat(Stream.of("a","c"), not(contains("a", "b")));
     }
 
     @Test

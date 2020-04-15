@@ -370,7 +370,7 @@ public class StreamMatchers {
      * @see #startsWithDouble(double...)
      */
     @SafeVarargs
-    public static <T,S extends BaseStream<T,S>> Matcher<S> contains(Matcher<T>... expectedMatchers) {
+    public static <T, S extends BaseStream<T, ? extends S>> Matcher<S> contains(Matcher<T>... expectedMatchers) {
         return new BaseMatcherStreamMatcher<T,S>() {
 
             @Override
@@ -393,7 +393,7 @@ public class StreamMatchers {
      * @see #startsWithDouble(double...)
      */
     @SafeVarargs
-    public static <T,S extends BaseStream<T,S>> Matcher<S> contains(T... expected) {
+    public static <T, S extends BaseStream<T, ? extends S>> Matcher<S> contains(T... expected) {
         return new BaseStreamMatcher<T,S>() {
             @Override
             protected boolean matchesSafely(S actual) {

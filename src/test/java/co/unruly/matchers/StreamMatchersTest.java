@@ -236,6 +236,15 @@ public class StreamMatchersTest {
         assertThat("xyz", where(characters, equalTo(Stream.of('x', 'y', 'z'))));
     }
 
+    @Test
+    public void contains_handles_types() {
+        assertThat("xyz", where(s -> s.chars().mapToObj(i -> (char) i), contains('x', 'y', 'z')));
+
+        DescribableFunction<String, BaseStream<Character, Stream<Character>>> characters = s -> s.chars().mapToObj(i -> (char) i);
+        assertThat("xyz", where(characters, contains('x', 'y', 'z')));
+        assertThat("xyz", where(characters, not(contains('x', 'y'))));
+    }
+
 
     @Test
     public void contains_failureMessages() throws Exception {

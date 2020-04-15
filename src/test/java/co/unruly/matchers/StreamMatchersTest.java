@@ -1,18 +1,29 @@
 package co.unruly.matchers;
 
+import co.unruly.matchers.function.DescribableFunction;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
-import java.util.stream.*;
+import java.util.stream.BaseStream;
+import java.util.stream.DoubleStream;
+import java.util.stream.IntStream;
+import java.util.stream.LongStream;
+import java.util.stream.Stream;
 
-import static co.unruly.matchers.StreamMatchers.*;
+import static co.unruly.matchers.Java8Matchers.where;
+import static co.unruly.matchers.StreamMatchers.allMatch;
+import static co.unruly.matchers.StreamMatchers.anyMatch;
 import static co.unruly.matchers.StreamMatchers.contains;
 import static co.unruly.matchers.StreamMatchers.empty;
 import static co.unruly.matchers.StreamMatchers.equalTo;
 import static co.unruly.matchers.StreamMatchers.startsWith;
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertThat;
+import static co.unruly.matchers.StreamMatchers.startsWithInt;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.lessThanOrEqualTo;
+import static org.hamcrest.Matchers.not;
 
 public class StreamMatchersTest {
     @Test
@@ -22,7 +33,7 @@ public class StreamMatchersTest {
 
     @Test
     public void contains_failureDifferingSingleItem() throws Exception {
-        assertThat(Stream.of("a"), is(not(contains("b"))));
+        assertThat(Stream.of("a"), not(contains("b")));
     }
 
     @Test
@@ -32,7 +43,7 @@ public class StreamMatchersTest {
 
     @Test
     public void contains_failureDifferingLength() throws Exception {
-        assertThat(Stream.of("a"), is(not(contains("a", "b"))));
+        assertThat(Stream.of("a"), not(contains("a", "b")));
     }
 
     @Test
@@ -42,7 +53,7 @@ public class StreamMatchersTest {
 
     @Test
     public void contains_failureDifferingItems() throws Exception {
-        assertThat(Stream.of("a","c"), is(not(contains("a", "b"))));
+        assertThat(Stream.of("a","c"), not(contains("a", "b")));
     }
 
     @Test
@@ -208,9 +219,30 @@ public class StreamMatchersTest {
 
     @Test
     public void equalTo_failureMessages() throws Exception {
-        Matcher<BaseStream<String, Stream<String>>> matcher = equalTo(Stream.of("a", "b", "c", "d", "e", "f", "g", "h"));
+        Matcher<Stream<String>> matcher = equalTo(Stream.of("a", "b", "c", "d", "e", "f", "g", "h"));
         Stream<String> testData = Stream.of("a", "b", "c", "d", "e");
         Helper.testFailingMatcher(testData, matcher, "Stream of [\"a\",\"b\",\"c\",\"d\",\"e\",\"f\",\"g\",\"h\"]", "Stream of [\"a\",\"b\",\"c\",\"d\",\"e\"]");
+    }
+
+    @Test
+    public void equalTo_handles_types() {
+        Stream<Character> expectedStream = Stream.of('x', 'y', 'z');
+        assertThat("xyz", where(s -> s.chars().mapToObj(i -> (char) i), equalTo(expectedStream)));
+
+        BaseStream<Character, Stream<Character>> expectedBaseStream = Stream.of('x', 'y', 'z');
+        assertThat("xyz", where(s -> s.chars().mapToObj(i -> (char) i), equalTo(expectedBaseStream)));
+
+        DescribableFunction<String, BaseStream<Character, Stream<Character>>> characters = s -> s.chars().mapToObj(i -> (char) i);
+        assertThat("xyz", where(characters, equalTo(Stream.of('x', 'y', 'z'))));
+    }
+
+    @Test
+    public void contains_handles_types() {
+        assertThat("xyz", where(s -> s.chars().mapToObj(i -> (char) i), contains('x', 'y', 'z')));
+
+        DescribableFunction<String, BaseStream<Character, Stream<Character>>> characters = s -> s.chars().mapToObj(i -> (char) i);
+        assertThat("xyz", where(characters, contains('x', 'y', 'z')));
+        assertThat("xyz", where(characters, not(contains('x', 'y'))));
     }
 
 
@@ -224,7 +256,7 @@ public class StreamMatchersTest {
     @Test
     public void equalToIntStream_failureMessages() throws Exception {
         IntStream testData = IntStream.range(8, 10);
-        Matcher<BaseStream<Integer, IntStream>> matcher = equalTo(IntStream.range(0, 6));
+        Matcher<IntStream> matcher = equalTo(IntStream.range(0, 6));
         Helper.testFailingMatcher(testData, matcher, "Stream of [<0>,<1>,<2>,<3>,<4>,<5>]", "Stream of [<8>,<9>]");
     }
 

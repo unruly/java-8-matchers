@@ -7,19 +7,23 @@ import org.hamcrest.TypeSafeMatcher;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.PrimitiveIterator;
 import java.util.Objects;
-import java.util.stream.*;
+import java.util.PrimitiveIterator;
+import java.util.stream.BaseStream;
+import java.util.stream.DoubleStream;
+import java.util.stream.IntStream;
+import java.util.stream.LongStream;
+import java.util.stream.Stream;
 
 public class StreamMatchers {
 
-    public static <T,S extends BaseStream<T,S>> Matcher<BaseStream<T,S>> empty() {
-        return new TypeSafeMatcher<BaseStream<T, S>>() {
+    public static <T,S extends BaseStream<T,? extends S>> Matcher<S> empty() {
+        return new TypeSafeMatcher<S>() {
 
             private Iterator<T> actualIterator;
 
             @Override
-            protected boolean matchesSafely(BaseStream<T, S> actual) {
+            protected boolean matchesSafely(S actual) {
                 actualIterator = actual.iterator();
                 return !actualIterator.hasNext();
             }
@@ -30,7 +34,7 @@ public class StreamMatchers {
             }
 
             @Override
-            protected void describeMismatchSafely(BaseStream<T, S> item, Description description) {
+            protected void describeMismatchSafely(S item, Description description) {
                 description.appendText("A non empty Stream starting with ").appendValue(actualIterator.next());
             }
         };
@@ -50,10 +54,10 @@ public class StreamMatchers {
      * @see #startsWithLong
      * @see #startsWithDouble
      */
-    public static <T,S extends BaseStream<T,S>> Matcher<BaseStream<T,S>> equalTo(BaseStream<T, S> expected) {
-        return new BaseStreamMatcher<T,BaseStream<T,S>>() {
+    public static <T,S extends BaseStream<T,? extends S>> Matcher<S> equalTo(S expected) {
+        return new BaseStreamMatcher<T,S>() {
             @Override
-            protected boolean matchesSafely(BaseStream<T,S> actual) {
+            protected boolean matchesSafely(S actual) {
                 return remainingItemsEqual(expected.iterator(), actual.iterator());
             }
         };
@@ -366,7 +370,7 @@ public class StreamMatchers {
      * @see #startsWithDouble(double...)
      */
     @SafeVarargs
-    public static <T,S extends BaseStream<T,S>> Matcher<S> contains(Matcher<T>... expectedMatchers) {
+    public static <T, S extends BaseStream<T, ? extends S>> Matcher<S> contains(Matcher<T>... expectedMatchers) {
         return new BaseMatcherStreamMatcher<T,S>() {
 
             @Override
@@ -389,7 +393,7 @@ public class StreamMatchers {
      * @see #startsWithDouble(double...)
      */
     @SafeVarargs
-    public static <T,S extends BaseStream<T,S>> Matcher<S> contains(T... expected) {
+    public static <T, S extends BaseStream<T, ? extends S>> Matcher<S> contains(T... expected) {
         return new BaseStreamMatcher<T,S>() {
             @Override
             protected boolean matchesSafely(S actual) {
@@ -912,7 +916,7 @@ public class StreamMatchers {
     private static class IntArrayIterator implements PrimitiveIterator.OfInt {
         private final int[] expected;
         private int currentPos = 0;
-        
+
         public IntArrayIterator(int... expected) {
             this.expected = expected;
         }

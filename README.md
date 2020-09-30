@@ -1,8 +1,10 @@
-# java-8-matchers
+# java-8-matchers 
 
 [![Build Status](https://travis-ci.org/unruly/java-8-matchers.svg?branch=master)](https://travis-ci.org/unruly/java-8-matchers)
 [![Release Version](https://img.shields.io/maven-central/v/co.unruly/java-8-matchers.svg)](https://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22co.unruly%22%20AND%20a%3A%22java-8-matchers%22)
 [![Javadocs](https://www.javadoc.io/badge/co.unruly/java-8-matchers.svg?color=yellow)](https://www.javadoc.io/doc/co.unruly/java-8-matchers)
+
+:warning: **This repo had been archived.  Development continues at https://github.com/mrwilson/java-8-matchers** :warning:
 
 **Hamcrest Matchers for Java 8 features.**
 
